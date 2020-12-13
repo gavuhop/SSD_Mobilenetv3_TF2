@@ -25,7 +25,7 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-
+from tensorflow.keras.models import Model
 MobileNetV3_Small_Spec = [
     # Op            k    exp    out    SE     NL        s
     [ "ConvBnAct",  3,   False, 16,    False, "hswish", 2 ],
@@ -334,7 +334,7 @@ def MobileNetV3(type="small", input_shape=(224, 224, 3), classes_number=30, widt
     outputs = CusReshape(out=classes_number)(output)
 
     model = tf.keras.Model(inputs=inputs, outputs=outputs, name=name)
-    model.summary()
+    # model.summary()
 
     return model
 
@@ -354,3 +354,8 @@ if __name__ == "__main__":
         tf.compat.v2.config.experimental.set_memory_growth(gpu, True)
 
     model = MobileNetV3(type="small")
+    model.summary()
+    # model1 = Model(inputs=model.inputs, outputs=model.layers[1].output)
+    # print("Get weights",model.get_weights())
+    # model1.summary()
+
